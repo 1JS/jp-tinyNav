@@ -12,20 +12,19 @@
 
     return this.each( ->
       nav = $(@)
-      
-      console.log settings
+      # $select = 
 
-      list = ''
+      options = ''
       nav.find("a").each( ->
         a = $(@)
         link = a.attr('href')
         text = a.text()
 
-        li = "<option vlaue= '#{link}'>#{text}</option>"
-        list = list.concat(li)
+        options += "<option vlaue= '#{link}'>#{text}</option>"
       )
 
-      console.log list
+      console.log options
+
     )
 
 )(jQuery)
@@ -34,6 +33,10 @@
 # 1 loop through nav build a '<option></option>' for each '<li></li>', hide link in 'value' attribute, wrap in '<select></select>'
 # 2 hide orginal nav and show the build nav when window.width() reach breakpoint
 # 3 go to the option vlaue address when selected
+
+# author's solution
+# 1 namespacing -> 2 build options -> 3 Append options to a select -> 4 select the active item
+# -> 5 change window location on change -> 6 inject select
 
 # to improve:　
 # - make it support mul-level nav, by add '-' before subNav and '--' to the third level nav
