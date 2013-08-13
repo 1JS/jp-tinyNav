@@ -33,7 +33,7 @@
       .find("a").each( ->
         a = $(@) # cache
 
-        options += '<option vlaue="' + a.attr('href') + '">'
+        options += '<option value="' + a.attr('href') + '">'
 
         j = 0
         len = a.parentsUntil(namespaceClass, 'ul, ol').length
@@ -51,10 +51,9 @@
 
       # change window location on option change
       $select.change( (e)->
-        console.log @
-        console.log $(@).val()
-        # window.location.href = $(@).val()
-        e.preventDefault()
+  
+        # console.log $(@).val()
+        window.location.href = $(@).val()
       )
 
       # inject select
@@ -95,4 +94,5 @@
 # - make it support mul-level nav, by add '-' before subNav and '--' to the third level nav
 
 # drove me nuts:
-# - $select.change, $(@).val() I get the text instead of option value.
+# - $select.change, $(@).val() I get the text instead of option value: 
+  # I debug for over 1 hour, drive me nut. The reason: I misspell 'value' with 'vlaue'
