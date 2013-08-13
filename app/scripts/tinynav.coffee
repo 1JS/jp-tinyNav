@@ -5,49 +5,78 @@
   $.fn.tinyNav = (options) ->
     # defaults
     defaults =
-      breakpoint: '600px'   # String: Responsive breakpoint for tinyNav
+      breakpoint: 600   # String: Responsive breakpoint for tinyNav
       header: ''            # String: Specify text for "header" and show header instead of the active item
 
     #setting
     settings = $.extend({}, defaults, options)
 
+    $window = $(window)   
     i = 0 # use for namespacing
 
     return this.each( ->
       $nav = $(@) # cache
+      t = undefined # for setTimeout
 
       # namespacing
       i++
       namespace = 'tinynav' + i
+      namespaceClass = '.' + namespace
+      namespaceId = '#' + namespace
       $select = $('<select/>').attr('id', namespace)
 
       # build options, multi-level supported
       options = ''
 
       $nav
-      .addClass(namespace)
+      .addClass("#{namespace} desktop-nav")
       .find("a").each( ->
         a = $(@) # cache
+
         options += '<option vlaue="' + a.attr('href') + '">'
 
-        # j = undefined
-        len = a.parentsUntil('.' + namespace, 'ul, ol').length
-        console.log len
-        # for (j = 0; j < len; j++)
         j = 0
+        len = a.parentsUntil(namespaceClass, 'ul, ol').length
         options += '- ' for j in [1..len] by 1
 
         options += a.text() + '</option>'
       )
 
-      console.log options
-
       # append options to a select
       $select.append(options)
 
       # select the active item
+      index = $(namespaceClass + ' li').index( $(namespaceClass + ' li.active') )
+      $select.find('option:eq(' + index + ')').attr('selected', true)
+
+      # change window location on option change
+      $select.change( (e)->
+        console.log @
+        console.log $(@).val()
+        # window.location.href = $(@).val()
+        e.preventDefault()
+      )
+
+      # inject select
+      $(namespaceClass).after($select);
 
 
+      # switch nav depend on window width
+      switchNav = ->
+        if ($window.width() < settings.breakpoint)
+          $('.desktop-nav').hide()
+          $(namespaceId).show()
+        else
+          $(namespaceId).hide()
+          $('.desktop-nav').show()
+
+      switchNav() # call function when page load
+
+      # on window resize
+      $window.resize( ->
+        clearTimeout(t)
+        t = setTimeout(switchNav, 200)
+      )
     )
 
 )(jQuery, window)
@@ -64,3 +93,6 @@
 
 # to improve:　
 # - make it support mul-level nav, by add '-' before subNav and '--' to the third level nav
+
+# drove me nuts:
+# - $select.change, $(@).val() I get the text instead of option value.

@@ -22,13 +22,13 @@
 
         <div class="nav-container">
             <ul class="tinynav clearfix">
-                <li class="active">
+                <li>
                     <a href="http://jquery.com/">A jquery plugin</a>
                 </li>
                 <li>
                     <a href="https://github.com/viljamis/TinyNav.js">Tiny Nav</a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="https://github.com/1JS">Buid for Practise</a>
                 </li>
                 <li>
@@ -39,13 +39,13 @@
 
         <div class="nav-container">
             <ul class="tinynav clearfix">
-                <li class="active">
+                <li >
                     <a href="#id">Id Test</a>
                     <ul>
                         <li><a href="https://www.google.com/">Google</a></li>
                         <li><a href="https://www.bing.com/">Bing</a></li>
                         <ul>
-                            <li><a href="https://github.com/">Github</a></li>
+                            <li class="active"><a href="https://github.com/">Github</a></li>
                         </ul>
                         <li><a href="https://www.yahoo.com/">Yahoo</a></li>
                     </ul>
@@ -83,7 +83,7 @@
         <!-- endbuild -->
         <script>
             $('.tinynav').tinyNav({
-                breakpoint: '800px'
+                breakpoint: 800
             });
         </script>
 
