@@ -5,30 +5,48 @@
   $.fn.tinyNav = (options) ->
     # defaults
     defaults =
-      breakpoint: '600px' # String: Responsive breakpoint for tinyNav
-      header: '' # String: Specify text for "header" and show header instead of the active item
+      breakpoint: '600px'   # String: Responsive breakpoint for tinyNav
+      header: ''            # String: Specify text for "header" and show header instead of the active item
 
+    #setting
     settings = $.extend({}, defaults, options)
+
     i = 0 # use for namespacing
 
     return this.each( ->
-      nav = $(@)
+      $nav = $(@) # cache
+
       # namespacing
       i++
       namespace = 'tinynav' + i
       $select = $('<select/>').attr('id', namespace)
 
+      # build options, multi-level supported
       options = ''
-      nav.find("a").each( ->
-        a = $(@)
-        link = a.attr('href')
-        text = a.text()
 
-        options += "<option vlaue= '#{link}'>#{text}</option>"
+      $nav
+      .addClass(namespace)
+      .find("a").each( ->
+        a = $(@) # cache
+        options += '<option vlaue="' + a.attr('href') + '">'
+
+        # j = undefined
+        len = a.parentsUntil('.' + namespace, 'ul, ol').length
+        console.log len
+        # for (j = 0; j < len; j++)
+        j = 0
+        options += '- ' for j in [1..len] by 1
+
+        options += a.text() + '</option>'
       )
 
-      console.log i
       console.log options
+
+      # append options to a select
+      $select.append(options)
+
+      # select the active item
+
 
     )
 
