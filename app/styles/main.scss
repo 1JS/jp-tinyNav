@@ -23,7 +23,7 @@ ul.tinynav {
   padding: 10px;
   border-radius: 5px;
 
-  li {
+  & > li {
     float: left;
     margin-right: 10px;
     padding: 5px 6px;
