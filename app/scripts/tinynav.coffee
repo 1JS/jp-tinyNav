@@ -1,7 +1,7 @@
 # original version: https://github.com/viljamis/TinyNav.js/blob/master/tinynav.js
-# write for practise
+# write for practise, no css needed
 
-(($) ->
+(($, window) ->
   $.fn.tinyNav = (options) ->
     # defaults
     defaults =
@@ -9,10 +9,14 @@
       header: '' # String: Specify text for "header" and show header instead of the active item
 
     settings = $.extend({}, defaults, options)
+    i = 0 # use for namespacing
 
     return this.each( ->
       nav = $(@)
-      # $select = 
+      # namespacing
+      i++
+      namespace = 'tinynav' + i
+      $select = $('<select/>').attr('id', namespace)
 
       options = ''
       nav.find("a").each( ->
@@ -23,16 +27,18 @@
         options += "<option vlaue= '#{link}'>#{text}</option>"
       )
 
+      console.log i
       console.log options
 
     )
 
-)(jQuery)
+)(jQuery, window)
 
 # my solution( learn from css tricks):
 # 1 loop through nav build a '<option></option>' for each '<li></li>', hide link in 'value' attribute, wrap in '<select></select>'
 # 2 hide orginal nav and show the build nav when window.width() reach breakpoint
 # 3 go to the option vlaue address when selected
+# 4 window.resize
 
 # author's solution
 # 1 namespacing -> 2 build options -> 3 Append options to a select -> 4 select the active item
